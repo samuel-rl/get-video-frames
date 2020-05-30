@@ -7,10 +7,18 @@ const styleHidden = {
 	display: 'none',
 };
 
+const styleDiv = {
+    width: '90%',
+    height: '60px',
+    border : 'solid black 1px',
+    margin : '0px auto'
+}
+
 const test = e => {
 	e.preventDefault();
 	document.getElementById('fileInput').click();
 };
+
 
 function App() {
 	const [videoURL, setVideoURL] = useState(null);
@@ -47,19 +55,21 @@ function App() {
 
 		pro.innerHTML = (this.currentTime / this.duration * 100).toFixed(2) + ' %';
 		if (this.currentTime < this.duration) {
-			this.currentTime += 60;
+			this.currentTime += 100;
         }
 	}
 
 	function onend(e) {
-		var img;
+        var img;
+        var sizeWidth = 100 / array.length;
+        var divResult = document.getElementById('divResult');
 		for (var i = 0; i < array.length; i++) {
-			var node = document.createElement('br');
 			img = new Image();
 			img.onload = revokeURL;
-			img.src = URL.createObjectURL(array[i]);
-			document.body.appendChild(img);
-			document.body.appendChild(node);
+            img.src = URL.createObjectURL(array[i]);
+            img.style.width = sizeWidth+'%';
+            img.style.height = '60px';
+            divResult.appendChild(img)
 		}
 		URL.revokeObjectURL(this.src);
 	}
@@ -81,6 +91,7 @@ function App() {
 			<button onClick={capture}>Capture</button>
 			<canvas id="canvas" />
 			<p id="progress" />
+            <div id="divResult" style={styleDiv}></div>
 		</div>
 	);
 }
